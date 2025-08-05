@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from Backend.db.db import Base
+from Backend.src.db.db import Base
 from sqlalchemy import DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
 

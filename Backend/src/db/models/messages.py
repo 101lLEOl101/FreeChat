@@ -1,7 +1,8 @@
 from datetime import datetime, timezone
-from Backend.db.db import Base
+from Backend.src.db.db import Base
 from sqlalchemy import String, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 
 class Message(Base):
     __tablename__ = 'messages'

@@ -1,2 +1,4 @@
 /.idea
 /Frontend/FreeChat/node_modules/
+
+/Backend/src/certs
