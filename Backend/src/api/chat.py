@@ -23,7 +23,7 @@ async def create_chat(data: CreateChat,
     return result
 
 
-@router.get('{chat_id}/messages')
+@router.get('/{chat_id}/messages')
 async def get_messages_in_chat(chat_id: Annotated[int, Path(title="The ID of chat to get messages")],
                                access_token: str = Cookie(default=None),
                                user_data=Depends(get_current_user)):
