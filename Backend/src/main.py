@@ -1,9 +1,9 @@
 import asyncio
-
 import uvicorn
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from Backend.src.db.db import Base, engine, async_session
-from fastapi import FastAPI
 from Backend.src.api import router
 from Backend.src.db.models.users import User
 from Backend.src.db.models.chats import Chat
@@ -27,13 +27,19 @@ async def some_data():
         await session.commit()
 
 
+app = FastAPI()
+app.include_router(router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*']
+)
+
+
 async def main():
     await create_db()
     await some_data()
 
-
-app = FastAPI()
-app.include_router(router)
 
 if __name__ == '__main__':
     asyncio.run(main())
