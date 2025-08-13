@@ -1,4 +1,5 @@
 /.idea
 /Frontend/FreeChat/node_modules/
 
-/Backend/src/certs
+/Backend/src/certs/jwt-private.pem
+/Backend/src/certs/jwt-public.pem
