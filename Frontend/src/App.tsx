@@ -1,13 +1,16 @@
 import './App.css'
 import '@mantine/core/styles.css';
-import { MantineProvider } from '@mantine/core';
-import {InputTooltip} from "./components/InputTooltip.tsx";
+import AuthPage from "./pages/AuthPage.tsx";
+import {Route, Routes} from "react-router-dom";
+import MainPage from "./pages/MainPage.tsx";
 
 function App() {
-
-  return <MantineProvider defaultColorScheme={'dark'}>
-    <InputTooltip></InputTooltip>
-  </MantineProvider>
+  return (
+      <Routes>
+          <Route path={"/auth"} element={<AuthPage/>}></Route>
+          <Route path={"/main"} element={<MainPage/>}></Route>
+      </Routes>
+  )
 }
 
 export default App
