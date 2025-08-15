@@ -27,9 +27,24 @@ export const GetMe = createAsyncThunk(
                 base_url + "/me",
                 { withCredentials: true }
             );
-            return res.data.user;
+            return res.data;
         } catch (err: any) {
-            return rejectWithValue(err.response?.data?.message || 'Ошибка загрузки профиля');
+            return rejectWithValue(err.response?.data?.message || 'Error With Getting Profile');
+        }
+    }
+);
+
+export const Logout = createAsyncThunk(
+    '/auth/logout',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await axios.post(
+                base_url + "/auth/logout",
+                { withCredentials: true }
+            );
+            return res.data;
+        } catch (err: any) {
+            return rejectWithValue(err.response?.data?.message || 'Error With Getting Profile');
         }
     }
 );
