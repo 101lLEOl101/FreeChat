@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { IconInfoCircle } from '@tabler/icons-react';
 import {Button, Center, Box, Group, Paper, PasswordInput, Text, TextInput, Tooltip, Loader} from '@mantine/core';
 import {useForm} from "@mantine/form";
@@ -22,8 +21,6 @@ export default function LoginComponent() {
             navigate("/main");
         }
     }
-    const [opened, setOpened] = useState(false);
-    const valid = form.values.password.trim().length >= 6;
     const rightSection = (
         <Tooltip
             label="We store your data securely"
@@ -49,24 +46,13 @@ export default function LoginComponent() {
                     label="Login"
                     placeholder="Your login"
                 />
-                <Tooltip
-                    label={valid ? 'All good!' : 'Password must include at least 6 characters'}
-                    position="bottom-start"
-                    withArrow
-                    opened={opened}
-                    color={valid ? 'teal' : 'gray'}
-                    withinPortal
-                >
-                    <PasswordInput
-                        label="Password"
-                        placeholder="Your password"
-                        onFocus={() => setOpened(true)}
-                        onBlur={() => setOpened(false)}
-                        mt="md"
-                        value={form.values.password}
-                        onChange={(e) => form.setFieldValue('password', e.currentTarget.value)}
-                    />
-                </Tooltip>
+                <PasswordInput
+                    label="Password"
+                    placeholder="Your password"
+                    mt="md"
+                    value={form.values.password}
+                    onChange={(e) => form.setFieldValue('password', e.currentTarget.value)}
+                />
                 {error && (
                     <Text color="red" size="sm" mt="sm">
                         {error}
@@ -88,6 +74,15 @@ export default function LoginComponent() {
                 <Group justify="center">
                     <Button type="submit" mt={"md"}>Login</Button>
                 </Group>
+                <Center mt="sm">
+                    <Button
+                        variant="subtle"
+                        size="xs"
+                        onClick={() => navigate("/register")}
+                    >
+                        Don't have an account?
+                    </Button>
+                </Center>
             </Paper>
         </form>
     );

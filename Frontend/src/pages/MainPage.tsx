@@ -12,7 +12,7 @@ export default function MainPage() {
     const handleLogout = async () => {
         const resultAction = await dispatch(Logout());
         if(Logout.fulfilled.match(resultAction)){
-            navigate("/auth");
+            navigate("/login");
         }
     }
     useEffect(() => {
