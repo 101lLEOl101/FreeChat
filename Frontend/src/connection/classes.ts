@@ -2,7 +2,7 @@ export default interface Chat{
     id: number;
 }
 
-export default interface User {
+export interface User {
     id: number;
     login: string;
     password: string;

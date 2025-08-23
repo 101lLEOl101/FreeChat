@@ -1,4 +1,5 @@
 /.idea
 /Frontend/node_modules/
+/Frontend/dist/
 
 /Backend/src/certs

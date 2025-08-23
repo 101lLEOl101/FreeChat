@@ -8,7 +8,6 @@ import {useAuthCheck} from "./connection/checkConnectionThunk.ts";
 
 function App() {
     useAuthCheck();
-
   return (
       <Routes>
           <Route path={"/login"} element={<LoginPage/>}></Route>

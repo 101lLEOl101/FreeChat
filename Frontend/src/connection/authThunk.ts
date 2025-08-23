@@ -56,6 +56,7 @@ export const Logout = createAsyncThunk(
         try {
             const res = await axios.post(
                 base_url + "/auth/logout",
+                {},
                 { withCredentials: true }
             );
             return res.data;

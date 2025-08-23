@@ -6,6 +6,7 @@ import type { AppDispatch, RootState } from "../../store.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { Register } from "../connection/authThunk.ts";
 import { useNavigate } from "react-router-dom";
+import {clearKeys, createAndStoreKeys} from "../connection/secureKeys.ts";
 
 export default function RegisterComponent() {
     const form = useForm({
@@ -30,16 +31,26 @@ export default function RegisterComponent() {
     const { loading, error } = useSelector((state: RootState) => state.auth);
 
     const handleRegister = async () => {
-        const resultAction = await dispatch(Register({
-            login: form.values.login,
-            password: form.values.password,
-            nickname: form.values.nickname,
-            public_key: form.values.public_key,
-            description: form.values.description
-        }));
+        try {
+            const keys = await createAndStoreKeys(form.values.login, form.values.password);
 
-        if (Register.fulfilled.match(resultAction)) {
-            navigate("/main");
+            const resultAction = await dispatch(Register({
+                login: form.values.login,
+                password: form.values.password,
+                nickname: form.values.nickname,
+                public_key: keys.publicKey,
+                description: form.values.description
+            }));
+
+            if (Register.fulfilled.match(resultAction)) {
+                navigate("/main");
+            } else {
+                await clearKeys(form.values.login, form.values.password);
+            }
+        }
+        catch (error) {
+            console.log(error);
+            await clearKeys(form.values.login, form.values.password);
         }
     };
 
