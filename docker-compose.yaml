@@ -1,0 +1,31 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Backend/Dockerfile
+    container_name: api
+    environment:
+      - DATABASE_URL=sqlite:////app/data/app.db
+    volumes:
+      - sqlite_data:/app/data
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/healthz || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      dockerfile: ./Frontend/Dockerfile
+    container_name: web
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "4173:4173"
+
+volumes:
+  sqlite_data:

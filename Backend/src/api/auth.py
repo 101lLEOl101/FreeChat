@@ -62,7 +62,7 @@ def auth_user_issue_jwt(response: Response,
         key='access_token',
         value=token,
         httponly=True,
-        secure=True,
+        secure=False, # with True web don`t working on macos. When https enable.
         max_age=600
     )
 

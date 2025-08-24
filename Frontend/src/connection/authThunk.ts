@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 
-const base_url = "http://localhost:8000/api";
+const base_url = import.meta.env.VITE_API_URL;
 
 export const Login = createAsyncThunk(
     'auth/login',

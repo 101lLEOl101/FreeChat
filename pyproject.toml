@@ -18,6 +18,22 @@ dependencies = [
     "bcrypt (>=4.3.0,<5.0.0)",
     "python-multipart (>=0.0.20,<0.0.21)"
 ]
+[tool.poetry]
+name = "freechat"
+version = "0.1.0"
+description = ""
+authors = ["Neeb and Leo"]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+fastapi = "^0.116.1"
+uvicorn = { extras = ["standard"], version = "^0.35.0" }
+sqlalchemy = { extras = ["asyncio"], version = "^2.0.42" }
+pydantic-settings = "^2.10.1"
+aiosqlite = "^0.21.0"
+pyjwt = { extras = ["crypto"], version = "^2.10.1" }
+bcrypt = "^4.3.0"
+python-multipart = "^0.0.20"
 
 
 [build-system]

@@ -30,17 +30,24 @@ async def some_data():
 app = FastAPI()
 app.include_router(router)
 
+origins = ["http://localhost:4173", "http://localhost:5173", "http://web:4173"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*']
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-
-async def main():
+@app.on_event("startup")
+async def on_startup():
     await create_db()
     await some_data()
 
+@app.get("/healthz")
+async def healthz():
+    return {"status": "ok"}
 
 if __name__ == '__main__':
-    asyncio.run(main())
     uvicorn.run("Backend.src.main:app", reload=True)
