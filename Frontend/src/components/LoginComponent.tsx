@@ -9,7 +9,7 @@ import {useNavigate} from "react-router-dom";
 export default function LoginComponent() {
     const form = useForm({
         initialValues: {
-            login: '',
+            login:'',
             password: '',
         }
     })
