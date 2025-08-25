@@ -1,0 +1,4 @@
+Backend/.idea
+Backend/src/certs/jwt-private-example.pem
+Backend/src/certs/jwt-public-example.pem
+Backemd/src/__pycache__
