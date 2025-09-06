@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type {AppDispatch} from "../../store.ts";
-import {GetMe} from "./authThunk.ts";
+import {GetMe} from "./Thunks.ts";
 
 export function useAuthCheck() {
     const publicPaths = ["/login", "/register"];

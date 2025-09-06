@@ -3,7 +3,7 @@ import {Button, Center, Box, Group, Paper, PasswordInput, Text, TextInput, Toolt
 import {useForm} from "@mantine/form";
 import type {AppDispatch, RootState} from "../../store.ts";
 import {useDispatch, useSelector} from "react-redux";
-import {Login} from "../connection/authThunk.ts";
+import {Login} from "../connection/Thunks.ts";
 import {useNavigate} from "react-router-dom";
 
 export default function LoginComponent() {

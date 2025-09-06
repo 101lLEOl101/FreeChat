@@ -1,4 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
+import type {User} from "./classes.ts";
 import axios from "axios";
 
 const base_url = "http://localhost:8000/api";
@@ -35,7 +36,7 @@ export const Register = createAsyncThunk(
     }
 );
 
-export const GetMe = createAsyncThunk(
+export const GetMe = createAsyncThunk<User, void, { rejectValue: string }>(
     'me',
     async (_, { rejectWithValue }) => {
         try {
@@ -57,6 +58,22 @@ export const Logout = createAsyncThunk(
             const res = await axios.post(
                 base_url + "/auth/logout",
                 {},
+                { withCredentials: true }
+            );
+            return res.data;
+        } catch (err: any) {
+            return rejectWithValue(err.response?.data?.message || 'Error With Getting Profile');
+        }
+    }
+);
+
+export const CreateChat = createAsyncThunk(
+    '/chats/create',
+    async (credentials: {nickname: string}, { rejectWithValue }) => {
+        try {
+            const res = await axios.post(
+                base_url + "/chats/create",
+                credentials,
                 { withCredentials: true }
             );
             return res.data;

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type {AuthState} from "./classes.ts";
-import {GetMe, Login, Logout} from "./authThunk.ts";
+import type {AuthState} from "../classes.ts";
+import {GetMe, Login, Logout} from "../Thunks.ts";
 
 const initialState: AuthState = {
     user: null,
@@ -8,7 +8,7 @@ const initialState: AuthState = {
     error: null,
 };
 
-const authSlice = createSlice({
+const AuthSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
@@ -44,4 +44,4 @@ const authSlice = createSlice({
     },
 });
 
-export default authSlice.reducer;
+export default AuthSlice.reducer;

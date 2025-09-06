@@ -3,7 +3,7 @@ import classes from "../styles/Header.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import type {AppDispatch, RootState} from "../../store.ts";
 import {useNavigate} from "react-router-dom";
-import {GetMe, Logout} from "../connection/authThunk.ts";
+import {GetMe, Logout} from "../connection/Thunks.ts";
 import {useEffect, useState} from "react";
 import cx from 'clsx';
 import {IconChevronDown, IconLogout} from "@tabler/icons-react";

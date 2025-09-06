@@ -1,63 +1,39 @@
-import {Button, Flex, Group, ScrollArea, Stack, Text, TextInput} from "@mantine/core";
+import {Box, Flex, Loader, Text} from "@mantine/core";
 import Header from "../components/Header";
 import classes from "../styles/MainPage.module.css"
-import {useState} from "react";
+import SideBar from "../components/SideBar.tsx";
+import SelectedChat from "../components/SelectedChat";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import type {AppDispatch, RootState} from "../../store.ts";
+import {CreateChat, GetMe} from "../connection/Thunks.ts";
 
 export default function MainPage() {
-    const [chats, setChats] = useState([
-        { id: 1, name: "Общий чат" },
-        { id: 2, name: "Рабочая группа" },
-        { id: 3, name: "Друзья" },
-    ]);
-    const [selectedChat, setSelectedChat] = useState<number | null>(1);
-
-    const handleAddChat = () => {
-        const newId = chats.length + 1;
-        setChats([...chats, { id: newId, name: `Новый чат ${newId}` }]);
+    const dispatch = useDispatch<AppDispatch>();
+    const {user, loading, error } = useSelector((state: RootState) => state.chat);
+    const [selectedChat, setSelectedChat] = useState<number | null>(null);
+    useEffect(() => {
+        dispatch(GetMe());
+    }, [dispatch]);
+    const handleAddChat = async (nickname: string) => {
+        const resultAction = await dispatch(CreateChat({nickname}));
+        if(CreateChat.fulfilled.match(resultAction)){
+            dispatch(GetMe())
+        }
     };
  return(<>
          <Header/>
          <Flex className={classes.main}>
-             <Flex
-                 direction="column"
-                 w="20%"
-                 className={classes.sidebar}
-             >
-                 <Group mb="sm" p="sm">
-                     <Text fw={600}>Чаты</Text>
-                     <TextInput></TextInput>
-                     <Button size="xs" onClick={handleAddChat}>+</Button>
-                 </Group>
+             {loading && <Box pt={10} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%',}}><Loader size="lg" /></Box> }
+             {error && <Text color={"red"}>{error}</Text>}
+             {(!loading && !error) && <SideBar
+                 chats={user?.chats}
+                 selectedChat={selectedChat}
+                 onSelectChat={setSelectedChat}
+                 onAddChat={handleAddChat}
+             />}
 
-                 <ScrollArea>
-                     <Stack p="sm">
-                         {chats.map((chat) => (
-                             <Button
-                                 key={chat.id}
-                                 variant={selectedChat === chat.id ? "light" : "subtle"}
-                                 fullWidth
-                                 onClick={() => setSelectedChat(chat.id)}
-                             >
-                                 {chat.name}
-                             </Button>
-                         ))}
-                     </Stack>
-                 </ScrollArea>
-             </Flex>
-             <Flex
-                 w="80%"
-                 className={classes.chat}
-                 p="md"
-                 direction="column"
-             >
-                 {selectedChat ? (
-                     <Text size="lg" fw={500}>
-                         Чат: {chats.find((c) => c.id === selectedChat)?.name}
-                     </Text>
-                 ) : (
-                     <Text color="dimmed">Выберите чат</Text>
-                 )}
-             </Flex>
+            <SelectedChat chat={user?.chats.find((c) => c.id === selectedChat) || null} />
          </Flex>
      </>
  )
