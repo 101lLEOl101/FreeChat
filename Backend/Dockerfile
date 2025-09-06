@@ -24,6 +24,9 @@ RUN poetry install --only main --no-root
 # Копируем исходники бекенда
 COPY Backend/ ./Backend
 
+RUN openssl genrsa -out /app/Backend/src/certs/jwt-private.pem 2048 && openssl rsa -in /app/Backend/src/certs/jwt-private.pem -outform PEM -pubout -out /app/Backend/src/certs/jwt-public.pem
+
+
 # Создаём пользователя
 RUN adduser --disabled-password --gecos "" appuser && chown -R appuser:appuser /app
 USER appuser
