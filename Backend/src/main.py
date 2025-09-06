@@ -1,4 +1,3 @@
-import asyncio
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,7 +9,7 @@ from Backend.src.db.models.chats import Chat
 from Backend.src.db.models.chat_users import ChatUser
 from Backend.src.db.models.messages import Message
 from Backend.src.services.auth import hash_password
-
+from Backend.src.posts.admin import get_all_users
 
 async def create_db():
     async with engine.begin() as conn:
@@ -44,6 +43,7 @@ app.add_middleware(
 async def on_startup():
     await create_db()
     await some_data()
+    await get_all_users()
 
 @app.get("/healthz")
 async def healthz():
