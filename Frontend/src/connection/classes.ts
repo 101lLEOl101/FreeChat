@@ -8,7 +8,6 @@ export interface Chat {
     created_at: string;
 }
 
-
 export interface User {
     id: number;
     login: string;
@@ -28,4 +27,19 @@ export interface ChatState {
     user: User | null;
     loading: boolean;
     error: string | null;
+}
+
+export interface MessagesState {
+    messages: MessageType[] | null;
+    loading: boolean;
+    error: string | null;
+}
+
+export interface MessageType {
+    id: number;
+    chat_id: number;
+    user_id: number;
+    content: string;
+    created_at: string;
+    is_deleted: boolean;
 }

@@ -78,7 +78,38 @@ export const CreateChat = createAsyncThunk(
             );
             return res.data;
         } catch (err: any) {
-            return rejectWithValue(err.response?.data?.message || 'Error With Getting Profile');
+            return rejectWithValue(err.response?.data?.message || 'Error With Create Chat');
+        }
+    }
+);
+
+export const GetMessagesInChat = createAsyncThunk(
+    '/chats/getMessagesInChat',
+    async (id: number, { rejectWithValue }) => {
+        try {
+            const res = await axios.get(
+                base_url + "/chats/" + id + "/messages",
+                { withCredentials: true }
+            );
+            return res.data;
+        } catch (err: any) {
+            return rejectWithValue(err.response?.data?.message || 'Error With Getting Messages');
+        }
+    }
+)
+
+export const CreateMessage = createAsyncThunk(
+    '/message/create',
+    async (credentials: {chat_id: number, content: string}, { rejectWithValue }) => {
+        try {
+            const res = await axios.post(
+                base_url + "/message/create",
+                credentials,
+                { withCredentials: true }
+            );
+            return res.data;
+        } catch (err: any) {
+            return rejectWithValue(err.response?.data?.message || 'Error With Create Message');
         }
     }
 );
